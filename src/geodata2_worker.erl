@@ -142,6 +142,7 @@ lookup_key(_Rec, [{list, _Key} | _Path], Default) ->
 lookup_key(Rec, [Key | Path], Default) ->
 	case lists:keyfind(Key, 1, Rec) of
 		{_, Val} when Path == [] -> Val;
+		{_, [[_|_] = Rec2|_]} -> lookup_key(Rec2, Path, Default);
 		{_, Rec2} -> lookup_key(Rec2, Path, Default);
 		_ -> Default
 	end.
